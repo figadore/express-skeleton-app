@@ -1,3 +1,11 @@
+# Customize skeleton
+
+* update project name/description, run command in readme below
+* update .drone.yml's publish `repo` field
+* update config/config.js's `appName` field
+* activate repo in drone
+* generate .drone.sec from .drone.sec.dist in drone's `secrets` tab for the repo
+
 # Project name
 
 Project description

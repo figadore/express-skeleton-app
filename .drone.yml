@@ -3,6 +3,7 @@ build:
   commands:
     - env
     - pwd
+    - echo $DRONE_COMMIT > ./currentCommit
     - npm test
   environment:
     - NODE_PORT=3000
@@ -11,10 +12,15 @@ publish:
     tag:
       - $$BRANCH
       - "build-$$BUILD_NUMBER"
-    email: reese@shinymayhem.com
+    email: reesew@tzmedical.com
     registry: https://gcr.io
-    repo: gcr.io/project-changeme/skeleton
+    repo: gcr.io/upbeat-cargo/skeleton
     file: Dockerfile
     storage_driver: overlay
     username: "_json_key"
     password: "$$GOOGLE_TOKEN"
+notify:
+  slack:
+    webhook_url: https://hooks.slack.com/services/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
+    channel: tzsecg-ci
+    username: drone
