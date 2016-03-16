@@ -5,44 +5,25 @@
 var bunyan = require('bunyan');
 var ElasticsearchStream = require('bunyan-elasticsearch');
 var elasticsearch = require('elasticsearch');
-var errorSerializer = require('shiny-express-errors').serializer;
 
 // Require local modules
 var config = require('../config/config');
-
-// Format request object for elasticsearch
-function requestSerializer(request) {
-  if (request.hasOwnProperty('body') && typeof request.body !== "string") {
-    request.body = JSON.stringify(request.body);
-  }
-  return request;
-}
-
-// Format response object for elasticsearch
-function responseSerializer(response) {
-  if (response.hasOwnProperty('body') && typeof response.body !== "string") {
-    response.body = JSON.stringify(response.body);
-  }
-  return response;
-}
+var elasticsearchSerializers = require('./elasticsearchSerializers');
 
 var logger = bunyan.createLogger({
   name: config.appName,
-  serializers: {
-    request: requestSerializer,
-    response: responseSerializer,
-    err: errorSerializer
-  }
+  serializers: elasticsearchSerializers,
+  streams: []
 });
 
 // Add elasticsearch stream
 if (config.elasticsearch.host) {
   logger.addStream({
-    stream: getEsStream()
+    stream: getEsStream(),
+    level: config.logLevels.elasticsearch
   });
 }
-
-// Also log to stdout at custom level
+// Log to stdout at custom level
 logger.addStream({
   stream: process.stdout,
   level: config.logLevels.console

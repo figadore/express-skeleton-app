@@ -15,8 +15,10 @@ config.port = process.env.NODE_PORT || 80;
 
 config.logLevels = {};
 if (config.env === "production") {
+  config.logLevels.elasticsearch = "info";
   config.logLevels.console = "info";
 } else {
+  config.logLevels.elasticsearch = "debug";
   config.logLevels.console = "debug";
 }
 
