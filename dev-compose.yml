@@ -6,9 +6,22 @@ app:
     - 80:80
     - 8080:8080
   environment:
-    - NODE_ENV=development
+    NODE_ENV: development
+    ELASTICSEARCH_URL: http://elasticsearch:9200
   volumes:
     - ./:/var/www
     - ../npm/:/npm
-  command: sleep infinity
-  #command: authbind --deep npm run dev
+  #command: sleep infinity
+  command: authbind --deep npm run dev
+  links:
+    - elasticsearch
+elasticsearch:
+  image: shinydocker/elasticsearch:1.1
+kibana:
+  image: shinydocker/kibana:1.6
+  ports:
+    - 5601:5601
+  environment:
+    ELASTICSEARCH_URL: http://elasticsearch:9200
+  links:
+    - elasticsearch
