@@ -82,15 +82,15 @@ function compileLinksForGroup(linkGroupId, params, includeExclusives, useParams)
   }
   var result = [];
   // Add all required links
-  if (linkGroup.requiredLinks) {
-    var required = linkGroup.requiredLinks.map(function mapGetLink(ref) {
+  if (linkGroup.required) {
+    var required = linkGroup.required.map(function mapGetLink(ref) {
       return getLink(ref, params);
     });
     result = result.concat(required);
   }
   // Add all optional links, if any
-  if (linkGroup.optionalLinks) {
-    let optional = linkGroup.optionalLinks.map(function mapGetLink(ref) {
+  if (linkGroup.optional) {
+    let optional = linkGroup.optional.map(function mapGetLink(ref) {
       return getLink(ref, params);
     });
     result = result.concat(optional);
@@ -119,8 +119,8 @@ function compileLinksForGroup(linkGroupId, params, includeExclusives, useParams)
  * For the link reference specified, get the corresponding link object,
  * potentially overriding the rel and description
  *
- * @param {string|object} ref Link id, or object containing `id`, `alias`, and
- *                            optionally, `description`
+ * @param {string|object} ref Link id, or object containing `id`, and optionally
+ *                            `rel`, and `description`
  * @param {object}  params    Known url template parameters
  *
  * @returns {object} tz-api link object
@@ -129,9 +129,8 @@ function getLink(ref, params) {
   var link;
   if (typeof ref === "object") {
     link = clone(allLinks[ref.id]);
-    link.rel = ref.alias;
-    if (ref.alias) {
-      link.rel = ref.alias;
+    if (ref.rel) {
+      link.rel = ref.rel;
     }
     if (ref.description) {
       link.description = ref.description;
@@ -256,8 +255,8 @@ function verify(links, groups) {
   for (let groupId in groups) {
     let group = groups[groupId];
     for (let type in group) {
-      if (type === "requiredLinks"
-          || type === "optionalLinks"
+      if (type === "required"
+          || type === "optional"
           || type === "exclusive"
           || type === "mixin"
       ) {
