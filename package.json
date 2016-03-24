@@ -22,7 +22,9 @@
     "elasticsearch": "^10.1.3",
     "express": "~4.13.3",
     "forever": "^0.15.1",
+    "jade": "^1.11.0",
     "shiny-express-errors": "~0.4.2",
-    "shiny-express-formatter": "~0.3.2"
+    "shiny-express-formatter": "~0.3.2",
+    "url-template": "shinymayhem/url-template#leave-missing-params"
   }
 }

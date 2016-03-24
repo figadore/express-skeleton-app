@@ -1,0 +1,110 @@
+doctype html
+html
+  head
+    style.
+      body {
+        font-family: arial, sans-serif;
+        font-size: 16px;
+        padding: 0px 1em;
+      }
+
+      h1 {
+
+      }
+
+      .link {
+        color: #6495ED;
+        font-size: 18px;
+        font-weight: bold;
+        display: inline-block;
+        margin-bottom: 12px;
+      }
+
+      ul {
+        list-style: none;
+        padding-left: 0px;
+      }
+
+      li {
+        margin: 1em 0px;
+        padding: 1em;
+        box-shadow: 0px 1px 2px #C6C6C6;
+      }
+
+      p {
+        margin: 0px;
+        line-height: 1.6em;
+      }
+
+      a p {
+        display: inline-table;
+      }
+      .clear {
+        clear: both;
+      }
+
+      pre {
+        background-color: #F5F5F5;
+        margin: 8px 0px;
+        padding: .8em 2em;
+      }
+
+      pre a {
+        font-size: 14px;
+        font-weight: 400;
+        text-decoration: none;
+        line-height: 1.8;
+        color: inherit;
+        margin: 0px;
+      }
+
+      pre a:hover {
+        color: #6495ED;
+      }
+
+
+  body
+    h1= linkId
+    if links.length
+      ul
+        each link, index in links
+          li
+            if (link.id === undefined)
+              p.link= link.rel + JSON.stringify(link)
+            else
+              - var params = link.href.match(/({[^\/]*})/g)
+              if params
+                a.link(href=docRoot + "/" + link.id)= link.rel + " " + params
+              else
+                a.link(href=docRoot + "/" + link.id)= link.rel
+              if typeof link.id === "object"
+                p= JSON.stringify(link.id)
+            p= link.description
+            p= link.method
+            if link.accepts
+              p accepts:
+              pre
+                each accept in link.accepts
+                  - var schemaLink = accept.match(/schema="(.*)"/)
+                  if schemaLink !== null
+                    a(href="//" + schemaLink[1], target="_blank")
+                      p= accept
+                  else
+                    p= accept
+            .clear
+            p returns:
+              pre
+                each returnString in link.returns
+                  - var schemaLink = returnString.match(/schema="(.*)"/)
+                  if schemaLink !== null
+                    a(href="//" + schemaLink[1], target="_blank")
+                      p= returnString
+                  else
+                    p= returnString
+
+            if link.optional
+              p Optional
+    else
+      p No links
+      p
+        a(href="javascript:history.back()") Go Back
