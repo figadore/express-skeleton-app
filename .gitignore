@@ -1,12 +1,7 @@
 # NPM modules
 node_modules/
 
-# Additional yml files
-*.yaml
-*.yml
-
 # Secret files
-.drone.sec
 *.list
 
 # Logs
