@@ -6,12 +6,11 @@ var expect = chai.expect;
 var chaiHttp = require('chai-http');
 
 // Include local modules
-var config = require('../config/config');
-// Suppress request/response logging output (before loading lib/www)
-config.logLevels.console = "fatal";
+var logger = require('../util/logger');
 var app = require('../lib/www');
 
 // Setup
+var oldLogLevel;
 chai.config.includeStack = true;
 chai.use(chaiHttp);
 
@@ -23,5 +22,14 @@ describe('Connectivity', function connectivitySuite() {
         expect(res).to.have.status(200);
         done();
       });
+  });
+
+  before(function setLogLevel() {
+    oldLogLevel = logger.level();
+    logger.level('fatal');
+  });
+
+  after(function restoreLogLevel() {
+    logger.level(oldLogLevel);
   });
 });
