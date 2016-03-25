@@ -6,7 +6,7 @@ var express = require('express');
 
 // Include local modules
 var linkData = require('./linkData');
-var Links = require('../util/links');
+var Links = require('../lib/links');
 var mediaTypes = require('./mediaTypes');
 
 // Setup

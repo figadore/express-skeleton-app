@@ -6,7 +6,7 @@ var expect = chai.expect;
 var chaiHttp = require('chai-http');
 
 // Include local modules
-var logger = require('../util/logger');
+var logger = require('../lib/logger');
 var app = require('../lib/www');
 
 // Setup
