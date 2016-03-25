@@ -2,6 +2,7 @@
 node_modules/
 
 # Secret files
+.drone.sec.yml
 *.list
 
 # Logs
