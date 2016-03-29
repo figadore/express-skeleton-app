@@ -1,4 +1,5 @@
 /* eslint-env node */
+/* global Promise */
 // Customize this file with app routes and logic
 
 // Include external dependencies
@@ -16,6 +17,11 @@ module.exports = {
     // Set api router for app
     app.use(apiRoot, apiRouter);
     addApiRoutes(apiRouter);
+
+    // If the application needs to do anything asynchronous before starting the server, use the promise below
+    return new Promise(function asyncInit(resolve, reject) {
+      resolve();
+    });
   }
 };
 
