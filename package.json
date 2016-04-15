@@ -3,7 +3,7 @@
     "prestart": "npm install",
     "start": "forever lib/www.js | bunyan",
     "pretest": "npm install",
-    "test": "mocha | bunyan",
+    "test": "mocha",
     "dev": "nodemon lib/www.js | bunyan",
     "debug": "nodemon --debug lib/www.js | bunyan",
     "node-inspector": "node-inspector"
